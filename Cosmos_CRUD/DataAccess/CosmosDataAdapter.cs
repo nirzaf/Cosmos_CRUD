@@ -12,16 +12,14 @@ namespace Cosmos_CRUD.DataAccess
     public class CosmosDataAdapter : ICosmosDataAdapter
     {
         private readonly DocumentClient _client;
-        private readonly string _accountUrl;
-        private readonly string _primarykey;
 
         public CosmosDataAdapter(
             ICosmosConnection connection,
             IConfiguration config)
         {
-            _accountUrl = config.GetValue<string>("Cosmos:AccountURL");
-            _primarykey = config.GetValue<string>("Cosmos:AuthKey");
-            _client = new DocumentClient(new Uri(_accountUrl), _primarykey);
+            var accountUrl = config.GetValue<string>("Cosmos:AccountURL");
+            var primaryKey = config.GetValue<string>("Cosmos:AuthKey");
+            _client = new DocumentClient(new Uri(accountUrl), primaryKey);
         }
 
 
@@ -56,7 +54,7 @@ namespace Cosmos_CRUD.DataAccess
         {
             try
             {
-                userInfo.id = "d9e51c1e-1474-41d1-8f32-96deedd8f36a";
+                userInfo.id = Guid.NewGuid().ToString();
                 await _client.UpsertDocumentAsync(UriFactory.CreateDocumentCollectionUri(dbName, name), userInfo);
                 return true;
             }
