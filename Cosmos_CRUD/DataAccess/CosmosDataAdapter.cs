@@ -4,7 +4,6 @@ using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 

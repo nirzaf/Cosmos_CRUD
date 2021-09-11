@@ -1,5 +1,3 @@
-using System;
-
 namespace Cosmos_CRUD.Models
 {
     public class ErrorViewModel
