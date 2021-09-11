@@ -14,22 +14,21 @@ namespace Cosmos_CRUD.DataAccess.Utility
     /// <inheritdoc />
     public class CosmosConnection : ICosmosConnection
     {
-       
         /// </summary>
         protected string DatabaseId { get; }
 
-       
+
         /// </summary>
         protected string CollectionId { get; set; }
 
-       
-       
+
         private DocumentClient _client;
         private readonly string _endpointUrl;
         private readonly string _authKey;
         private readonly Random _random = new Random();
         private const string _partitionKey = "test";
         private readonly ILogger<ICosmosConnection> _logger;
+
         /// <summary>
         /// Config-based constructor.
         /// </summary>
@@ -74,13 +73,12 @@ namespace Cosmos_CRUD.DataAccess.Utility
         /// <returns></returns>
         private async Task<bool> VerifyDatabaseCreated()
         {
-
             var database = await _client.CreateDatabaseIfNotExistsAsync(
                 new Database
                 {
                     Id = DatabaseId
                 }
-                );
+            );
 
             if (database.StatusCode == HttpStatusCode.Created)
             {
@@ -92,6 +90,7 @@ namespace Cosmos_CRUD.DataAccess.Utility
                 _logger.LogInformation($"DocumentDB database already exists: {DatabaseId}");
                 return true;
             }
+
             return false;
         }
 
@@ -102,9 +101,8 @@ namespace Cosmos_CRUD.DataAccess.Utility
         private async Task<bool> VerifyCollectionCreated()
         {
             if (string.IsNullOrEmpty(CollectionId))
-            {
-                throw new Exception("No collection id was set before accessing the CosmosConnection's Initialize method");
-            }
+                throw new Exception(
+                    "No collection id was set before accessing the CosmosConnection's Initialize method");
 
             var databaseUri = UriFactory.CreateDatabaseUri(DatabaseId);
             var collection = await _client.CreateDocumentCollectionIfNotExistsAsync(
@@ -129,8 +127,6 @@ namespace Cosmos_CRUD.DataAccess.Utility
             }
 
             return false;
-
         }
-
     }
 }

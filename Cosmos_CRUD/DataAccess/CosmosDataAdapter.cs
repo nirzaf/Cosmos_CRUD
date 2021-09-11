@@ -17,10 +17,9 @@ namespace Cosmos_CRUD.DataAccess
         private readonly string _primarykey;
 
         public CosmosDataAdapter(
-         ICosmosConnection connection,
-         IConfiguration config)
+            ICosmosConnection connection,
+            IConfiguration config)
         {
-           
             _accountUrl = config.GetValue<string>("Cosmos:AccountURL");
             _primarykey = config.GetValue<string>("Cosmos:AuthKey");
             _client = new DocumentClient(new Uri(_accountUrl), _primarykey);
@@ -34,7 +33,7 @@ namespace Cosmos_CRUD.DataAccess
                 await _client.CreateDatabaseIfNotExistsAsync(new Database { Id = name });
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -45,7 +44,7 @@ namespace Cosmos_CRUD.DataAccess
             try
             {
                 await _client.CreateDocumentCollectionIfNotExistsAsync
-                 (UriFactory.CreateDatabaseUri(dbName), new DocumentCollection { Id = name });
+                    (UriFactory.CreateDatabaseUri(dbName), new DocumentCollection { Id = name });
                 return true;
             }
             catch
@@ -85,13 +84,12 @@ namespace Cosmos_CRUD.DataAccess
         {
             try
             {
-
-                var result = await _client.ReadDocumentFeedAsync(UriFactory.CreateDocumentCollectionUri(dbName, name), 
+                var result = await _client.ReadDocumentFeedAsync(UriFactory.CreateDocumentCollectionUri(dbName, name),
                     new FeedOptions { MaxItemCount = 10 });
 
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -103,7 +101,7 @@ namespace Cosmos_CRUD.DataAccess
             ResourceResponse<Document> response = null;
             try
             {
-                response = null;//await _client.UpsertDocumentAsync(_collectionUri, user);
+                response = null; //await _client.UpsertDocumentAsync(_collectionUri, user);
             }
             catch (DocumentClientException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
             {
@@ -136,7 +134,5 @@ namespace Cosmos_CRUD.DataAccess
                 throw;
             }
         }
-
-      
     }
 }

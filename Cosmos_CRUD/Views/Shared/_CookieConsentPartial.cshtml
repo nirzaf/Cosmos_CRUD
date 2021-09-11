@@ -17,7 +17,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="navbar-brand"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></span>
+                <span class="navbar-brand">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                </span>
             </div>
             <div class="collapse navbar-collapse">
                 <p class="navbar-text">
@@ -31,11 +33,13 @@
         </div>
     </nav>
     <script>
-        (function () {
-            document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click", function (el) {
-                document.cookie = el.target.dataset.cookieString;
-                document.querySelector("#cookieConsent").classList.add("hidden");
-            }, false);
+        (function() {
+            document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click",
+                function(el) {
+                    document.cookie = el.target.dataset.cookieString;
+                    document.querySelector("#cookieConsent").classList.add("hidden");
+                },
+                false);
         })();
     </script>
 }
